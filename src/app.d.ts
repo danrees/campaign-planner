@@ -7,6 +7,10 @@ declare global {
 		// interface Locals {}
 		// interface PageData {}
 		// interface Platform {}
+		type PocketBase = import('pocketbase').default;
+		interface Locals {
+			pb?: PocketBase;
+		}
 	}
 }
 
