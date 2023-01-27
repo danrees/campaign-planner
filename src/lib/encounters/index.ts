@@ -1,4 +1,5 @@
 export interface Participant {
+	id: string;
 	name: string;
 	hitPoints: number;
 	initiative: number;

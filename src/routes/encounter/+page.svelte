@@ -4,6 +4,8 @@
 	import type { Participant } from '$lib/encounters';
 	import { onMount } from 'svelte';
 	import type { PageServerData } from './$types';
+	import crypto from 'crypto';
+	import { v4 as uuidv4 } from 'uuid';
 
 	type Initiative = Character & Participant;
 	const calcHitpoints = (character: Character): number => {
@@ -17,6 +19,7 @@
 		characters = data.characters.map((c) => {
 			let newC: Initiative = {
 				...c.build,
+				id: uuidv4(),
 				hitPoints: calcHitpoints(c.build),
 				condition: 'normal',
 				initiative: 0
@@ -26,4 +29,6 @@
 	});
 </script>
 
-<EncounterManager bind:participants={characters} />
+<div class="container mx-auto">
+	<EncounterManager bind:participants={characters} />
+</div>
