@@ -13,7 +13,8 @@
 			name: 'New participant',
 			condition: 'normal',
 			hitPoints: 0,
-			initiative: 0
+			initiative: 0,
+			acTotal: { acTotal: 0 }
 		});
 
 		participants = [...participants];
@@ -27,6 +28,7 @@
 		<th>Hit Points</th>
 		<th>Condition</th>
 		<th>Initiative</th>
+		<th>AC</th>
 	</thead>
 	<tbody>
 		{#each participants as p (p.id)}
@@ -35,6 +37,7 @@
 				<td><input bind:value={p.hitPoints} type="number" class="input max-w-xs" /></td>
 				<td><input bind:value={p.condition} type="text" class="input max-w-xs" /></td>
 				<td><input bind:value={p.initiative} type="number" class="input max-w-xs" /></td>
+				<td><input bind:value={p.acTotal.acTotal} type="number" class="input max-w-xs" /></td>
 			</tr>
 		{/each}
 	</tbody>

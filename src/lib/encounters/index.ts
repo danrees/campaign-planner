@@ -4,4 +4,5 @@ export interface Participant {
 	hitPoints: number;
 	initiative: number;
 	condition: string;
+	acTotal: { acTotal: number };
 }
