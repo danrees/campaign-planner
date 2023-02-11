@@ -22,6 +22,20 @@
 		);
 	};
 
+	const resetPage = () => {
+		const c = data.characters.map((c) => {
+			let newC: Initiative = {
+				...c.build,
+				id: uuidv4(),
+				hitPoints: calcHitpoints(c.build),
+				condition: 'normal',
+				initiative: 0
+			};
+			return newC;
+		});
+		participants.set(c);
+	};
+
 	export let data: PageServerData;
 
 	onMount(() => {
@@ -48,4 +62,10 @@
 
 <div class="container mx-auto">
 	<EncounterManager bind:participants={$participants} />
+	<button
+		class="btn"
+		on:click={() => {
+			resetPage();
+		}}>Reset</button
+	>
 </div>
