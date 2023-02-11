@@ -9,6 +9,9 @@
 		<div class="flex-1">
 			<a class="btn btn-ghost normal-case text-xl" href="/">Campaign</a>
 		</div>
+		<div>
+			<a href="/encounter" class="btn btn-ghost normal-case text-xl">Encounter</a>
+		</div>
 		<div class="flex-none">
 			<a href="/login" class="btn btn-ghost normal-case text-xl">Login</a>
 		</div>
