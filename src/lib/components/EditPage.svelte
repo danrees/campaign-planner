@@ -3,5 +3,5 @@
 </script>
 
 <div class="form-control">
-	<textarea class="textarea " placeholder="Temp" bind:value rows={12} />
+	<textarea class="textarea " placeholder="Temp" bind:value name="content" rows={12} />
 </div>
