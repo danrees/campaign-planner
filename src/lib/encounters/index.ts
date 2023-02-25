@@ -6,3 +6,9 @@ export interface Participant {
 	condition: string;
 	acTotal: { acTotal: number };
 }
+
+export interface Encounter {
+	id: string;
+	name: string;
+	participants: Participant[];
+}

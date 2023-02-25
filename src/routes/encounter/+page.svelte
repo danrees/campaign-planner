@@ -1,12 +1,13 @@
 <script lang="ts">
-	import type { Build, Character } from '$lib/characters';
+	import type { Character } from '$lib/characters';
 	import EncounterManager from '$lib/components/EncounterManager.svelte';
 	import type { Participant } from '$lib/encounters';
-	import { onDestroy, onMount } from 'svelte';
+	import { onMount } from 'svelte';
 	import type { PageServerData } from './$types';
-	import crypto from 'crypto';
 	import { v4 as uuidv4 } from 'uuid';
 	import { participants } from '$lib/stores';
+
+	let encounterName: string;
 
 	type Initiative = Character & Participant;
 	const abilityBonus = (score: number): number => {
@@ -36,6 +37,18 @@
 		participants.set(c);
 	};
 
+	const saveEncounter = async (name: string) => {
+		const data = { name: name, participants: $participants };
+		console.log(data);
+		const resp = await fetch('/api/encounter', {
+			method: 'POST',
+			body: JSON.stringify(data)
+		});
+		if (!resp.ok) {
+			console.log(resp.json());
+		}
+	};
+
 	export let data: PageServerData;
 
 	onMount(() => {
@@ -61,11 +74,18 @@
 </script>
 
 <div class="container mx-auto">
+	<input bind:value={encounterName} />
 	<EncounterManager bind:participants={$participants} />
 	<button
 		class="btn"
 		on:click={() => {
 			resetPage();
 		}}>Reset</button
+	>
+	<button
+		class="btn"
+		on:click={() => {
+			saveEncounter(encounterName);
+		}}>Save</button
 	>
 </div>
