@@ -74,7 +74,11 @@
 </script>
 
 <div class="container mx-auto">
-	<input bind:value={encounterName} />
+	<input
+		class="input input-bordered w-full max-w-xs"
+		bind:value={encounterName}
+		placeholder="Name"
+	/>
 	<EncounterManager bind:participants={$participants} />
 	<button
 		class="btn"
