@@ -12,7 +12,8 @@ export const load = (async ({ url }) => {
 }) satisfies PageServerLoad;
 
 export const actions = {
-	save: async (event) => {
-		console.log(event);
+	save: async ({ request }) => {
+		const data = await request.formData();
+		console.log(data);
 	}
 } satisfies Actions;

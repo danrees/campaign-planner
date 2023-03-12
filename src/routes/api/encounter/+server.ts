@@ -15,10 +15,18 @@ export const GET = (async ({ locals }) => {
 export const POST = (async ({ request, locals }) => {
 	const encounter: Encounter = await request.json();
 	//console.log(encounter);
-	await locals.pb?.collection('encounters').create({
-		name: encounter.name,
-		participants: JSON.stringify(encounter.participants)
-	});
+	if (encounter.id) {
+		await locals.pb?.collection('encounters').update(encounter.id, {
+			id: encounter.id,
+			name: encounter.name,
+			participants: JSON.stringify(encounter.participants)
+		});
+	} else {
+		await locals.pb?.collection('encounters').create({
+			name: encounter.name,
+			participants: JSON.stringify(encounter.participants)
+		});
+	}
 
 	return json({ success: true });
 }) satisfies RequestHandler;

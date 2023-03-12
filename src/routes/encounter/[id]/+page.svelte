@@ -19,9 +19,9 @@
 		);
 	};
 
-	const saveEncounter = async (name: string, encounter: Encounter) => {
+	const saveEncounter = async (encounter: Encounter) => {
 		//console.log(data);
-		const data = { ...encounter, name: name };
+		//const data = { ...encounter, name: name };
 		const resp = await fetch('/api/encounter', {
 			method: 'POST',
 			body: JSON.stringify(encounter)
@@ -33,22 +33,21 @@
 
 	export let data: PageServerData;
 	let encounter = data.encounter;
-	let encounterName: string;
 </script>
 
 <div class="container mx-auto">
-	<input
-		class="input input-bordered w-full max-w-xs"
-		bind:value={encounterName}
-		placeholder="Name"
-	/>
 	{#if encounter}
+		<input
+			class="input input-bordered w-full max-w-xs"
+			bind:value={encounter.name}
+			placeholder="Name"
+		/>
 		<EncounterManager bind:participants={encounter.participants} />
 		<button
 			class="btn"
 			on:click={async () => {
 				if (encounter) {
-					await saveEncounter(encounterName, encounter);
+					await saveEncounter(encounter);
 				} else {
 					throw new Error('no encounter available to save');
 				}
