@@ -21,7 +21,11 @@
 	<div class="drawer-side">
 		<label for="my-drawer-2" class="drawer-overlay" />
 		{#if data.campaignPage}
-			<PageNav page={data.campaignPage} />
+			<ul class="menu">
+				<li>
+					<PageNav page={data.campaignPage} children={data.pages} />
+				</li>
+			</ul>
 		{/if}
 	</div>
 </div>

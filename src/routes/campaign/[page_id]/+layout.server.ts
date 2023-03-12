@@ -17,6 +17,7 @@ export const load = (async ({ locals, params }) => {
 		const sp: SubPage = structuredClone({ ...page });
 		return sp;
 	});
+	console.log(pages);
 	return {
 		campaignPage: structuredClone(campaignPage),
 		pages

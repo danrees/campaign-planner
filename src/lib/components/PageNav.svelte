@@ -5,13 +5,14 @@
 	export let children: SubPage[] = [];
 </script>
 
-<ul class="menu p-4 w-80 bg-base-100 text-base-content">
-	<li>
-		<span>{page.title}</span>
-		<ul class="menu p-4 w-80 bg-base-100 text-base-content">
+<span>{page.title}</span>
+<li>
+	<ul class="">
+		<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+		<li tabindex="0">
 			{#each children as subPage}
-				<li><PageNav page={subPage} /></li>
+				<PageNav page={subPage} />
 			{/each}
-		</ul>
-	</li>
-</ul>
+		</li>
+	</ul>
+</li>
