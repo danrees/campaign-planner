@@ -5,7 +5,7 @@ import type { RequestHandler } from './$types';
 export const GET = (async ({ locals }) => {
 	const encounters = await locals.pb?.collection('encounters').getFullList(10);
 	const mapped = encounters?.map((e) => ({
-		name: e.name,
+		...e,
 		participants: JSON.parse(e.participants)
 	}));
 
@@ -14,7 +14,7 @@ export const GET = (async ({ locals }) => {
 
 export const POST = (async ({ request, locals }) => {
 	const encounter: Encounter = await request.json();
-	console.log(encounter);
+	//console.log(encounter);
 	await locals.pb?.collection('encounters').create({
 		name: encounter.name,
 		participants: JSON.stringify(encounter.participants)

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Character } from '$lib/characters';
+	import { List, type Build, type Character } from '$lib/characters';
 	import EncounterManager from '$lib/components/EncounterManager.svelte';
 	import type { Participant } from '$lib/encounters';
 	import { onMount } from 'svelte';
@@ -7,89 +7,34 @@
 	import { v4 as uuidv4 } from 'uuid';
 	import { participants } from '$lib/stores';
 
-	let encounterName: string;
-
-	type Initiative = Character & Participant;
-	const abilityBonus = (score: number): number => {
-		return Math.floor((score - 10) / 2);
-	};
-	const calcHitpoints = (character: Character): number => {
-		const attr = character.attributes;
-		const aBonus = abilityBonus(character.abilities.con);
-		return (
-			(attr.classhp + attr.bonushpPerLevel + aBonus) * character.level +
-			attr.ancestryhp +
-			attr.bonushp
-		);
-	};
-
-	const resetPage = () => {
-		const c = data.characters.map((c) => {
-			let newC: Initiative = {
-				...c.build,
-				id: uuidv4(),
-				hitPoints: calcHitpoints(c.build),
-				condition: 'normal',
-				initiative: 0
-			};
-			return newC;
-		});
-		participants.set(c);
-	};
-
-	const saveEncounter = async (name: string) => {
-		const data = { name: name, participants: $participants };
-		console.log(data);
-		const resp = await fetch('/api/encounter', {
-			method: 'POST',
-			body: JSON.stringify(data)
-		});
-		if (!resp.ok) {
-			console.log(resp.json());
-		}
-	};
-
 	export let data: PageServerData;
-
-	onMount(() => {
-		const c = data.characters.map((c) => {
-			let newC: Initiative = {
-				...c.build,
-				id: uuidv4(),
-				hitPoints: calcHitpoints(c.build),
-				condition: 'normal',
-				initiative: 0
-			};
-			return newC;
-		});
-
-		participants.update((p) => {
-			const toUpdate = [...p];
-			const setThese = c.filter((i) => toUpdate.find((j) => j.name === i.name) === undefined);
-			console.log(setThese);
-			toUpdate.push(...setThese);
-			return toUpdate;
-		});
-	});
+	let characters: string[] = [];
 </script>
 
 <div class="container mx-auto">
-	<input
-		class="input input-bordered w-full max-w-xs"
-		bind:value={encounterName}
-		placeholder="Name"
-	/>
-	<EncounterManager bind:participants={$participants} />
-	<button
-		class="btn"
-		on:click={() => {
-			resetPage();
-		}}>Reset</button
-	>
-	<button
-		class="btn"
-		on:click={() => {
-			saveEncounter(encounterName);
-		}}>Save</button
-	>
+	<div class="py-5">
+		<h2 class="text-3xl py-2">Encounters</h2>
+		<ul class="list">
+			{#if data.encounters}
+				{#each data.encounters as encounter}
+					<li class="list-item">
+						<a class="link" href={`/encounter/${encounter.id}`}>{encounter.name}</a>
+					</li>
+				{/each}
+			{/if}
+		</ul>
+	</div>
+	<div class="py-5">
+		<h2 class="text-3xl py-2">Create New</h2>
+		{#if data.characters}
+			<select class="select" multiple bind:value={characters}>
+				{#each data.characters as char}
+					<option>{char}</option>
+				{/each}
+			</select>
+			<a class="btn" href={`/encounter/create?${characters.map((c) => `name=${c}`).join('&')}`}
+				>Create Encounter</a
+			>
+		{/if}
+	</div>
 </div>

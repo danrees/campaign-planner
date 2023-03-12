@@ -8,7 +8,7 @@ export interface Participant {
 }
 
 export interface Encounter {
-	id: string;
+	id?: string;
 	name: string;
 	participants: Participant[];
 }
