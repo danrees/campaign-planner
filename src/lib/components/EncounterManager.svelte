@@ -3,10 +3,14 @@
 	import { v4 as uuidv4 } from 'uuid';
 
 	export let participants: Participant[] = [];
-	$: {
+	// $: {
+	// 	sort()
+	// }
+
+	const sort = () => {
 		let p = participants.sort((a, b) => b.initiative - a.initiative);
 		participants = [...p];
-	}
+	};
 	const addParticipant = () => {
 		participants.push({
 			id: uuidv4(),
@@ -36,7 +40,16 @@
 				<td><input bind:value={p.name} type="text" class="input max-w-xs" /></td>
 				<td><input bind:value={p.hitPoints} type="number" class="input max-w-xs" /></td>
 				<td><input bind:value={p.condition} type="text" class="input max-w-xs" /></td>
-				<td><input bind:value={p.initiative} type="number" class="input max-w-xs" /></td>
+				<td
+					><input
+						bind:value={p.initiative}
+						type="number"
+						class="input max-w-xs"
+						on:mouseleave={() => {
+							sort();
+						}}
+					/></td
+				>
 				<td><input bind:value={p.acTotal.acTotal} type="number" class="input max-w-xs" /></td>
 			</tr>
 		{/each}
