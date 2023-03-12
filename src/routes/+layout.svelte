@@ -6,15 +6,30 @@
 
 <div class="min-h-full">
 	<nav class="navbar bg-base-100 border-b">
-		<div class="flex-1">
-			<a class="btn btn-ghost normal-case text-xl" href="/">Campaign</a>
+		<div class="navbar-start">
+			<div class="">
+				<a class="btn btn-ghost normal-case text-xl" href="/">Campaign-Planner</a>
+			</div>
+			<div class="dropdown ">
+				<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+				<!-- svelte-ignore a11y-label-has-associated-control -->
+				<label tabindex="0" class="btn btn-ghost">
+					<span>Tools</span>
+				</label>
+				<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+				<ul tabindex="0" class="menu menu-compact dropdown-content">
+					<li>
+						<a href="/campaign" class="btn btn-ghost normal-case text-xl">Campaigns</a>
+						<a href="/encounter" class="btn btn-ghost normal-case text-xl">Encounter</a>
+					</li>
+				</ul>
+			</div>
 		</div>
-		<div>
-			<a href="/encounter" class="btn btn-ghost normal-case text-xl">Encounter</a>
-		</div>
-		<div class="flex-none">
+		<div class="navbar-end">
 			<a href="/login" class="btn btn-ghost normal-case text-xl">Login</a>
 		</div>
 	</nav>
-	<slot />
+	<div class="container mx-auto">
+		<slot />
+	</div>
 </div>
